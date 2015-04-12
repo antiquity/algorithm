@@ -1,0 +1,53 @@
+// BEGIN CUT HERE
+// PROBLEM STATEMENT
+// Elly has a set of unique positive integers, given in the int[] numbers. She wants to add several (possibly none) new positive integers to this set, such that when the set is sorted no two consecutive numbers will share a positive divisor greater than 1. Return the smallest possible count of new numbers, with which she can achieve that.
+
+DEFINITION
+Class:EllysCoprimesDiv2
+Method:getCount
+Parameters:int[]
+Returns:int
+Method signature:int getCount(int[] numbers)
+
+
+CONSTRAINTS
+-numbers will contain between 1 and 50 elements, inclusive.
+-Each element of numbers will be between 1 and 100,000, inclusive.
+-All elements of numbers will be distinct.
+
+
+EXAMPLES
+
+0)
+{2200, 42, 2184, 17}
+
+Returns: 3
+
+Here one possible set of additional numbers is {43, 2195, 2199}.
+The sorted sequence is (17, 42, 43, 2184, 2195, 2199, 2200), and as you may see, no two consecutive numbers share a divisor greater than one.
+
+1)
+{13, 1, 6, 20, 33}
+
+Returns: 0
+
+For some sets, such as this one, no additional numbers are needed. When sorted, no pair of consecutive numbers shares a common divisor greater than 1.
+
+2)
+{7, 42}
+
+Returns: 1
+
+Note that prime numbers are not coprime with all other numbers.
+
+3)
+{55780, 44918, 55653, 4762, 41536, 40083, 79260, 7374, 24124, 91858, 7856,
+ 12999, 64025, 12706, 19770, 71495, 32817, 79309, 53779, 8421, 97984, 34586,
+ 893, 64549, 77792, 12143, 52732, 94416, 54207, 51811, 80845, 67079, 14829,
+ 25350, 22976, 23932, 62273, 58871, 82358, 13283, 33667, 64263, 1337, 42666}
+
+Returns: 15
+
+Large random set of numbers.
+
+// END CUT HERE

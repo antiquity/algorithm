@@ -1,0 +1,119 @@
+PROBLEM STATEMENT
+There is an n times n field.
+Some of the cells of the field contain water.
+You are given a map of the field encoded as a String[] field.
+There are n elements in field and each of them has n characters.
+The character field[i][j] is 'Y' if there is water in the cell (i,j).
+Otherwise, the corresponding character is 'N'.
+
+
+There are 4n elephants around the field: one per each cell boundary, as shown in the pictures below.
+The elephants can use their trunks to drink water.
+Each elephant can only extend its trunk straight into the field.
+So, for example, the elephants that are on the left side of the field can only extend their noses towards the right.
+The trunks are long enough to reach the opposite end of the field.
+
+
+
+
+
+There are two additional restrictions:
+The trunks of elephants are not allowed to intersect.
+For each cell with water, there can be at most one elephant drinking from that cell.
+
+
+For example, figure (a) below shows a valid configuration.
+Cells with water are blue, elephants are green, and their trunks are red.
+In the figure there are four elephants that drink.
+Figures (b) and (c) show invalid configurations. In both of them the trunks intersect.
+
+
+Your task is to return the maximal number of elephants who can drink at the same time.
+
+DEFINITION
+Class:ElephantDrinkingEasy
+Method:maxElephants
+Parameters:String[]
+Returns:int
+Method signature:int maxElephants(String[] map)
+
+
+CONSTRAINTS
+-n will be between 2 and 5, inclusive.
+-field will contain exactly n elements, inclusive.
+-Each element in field will contain exactly n characters, inclusive.
+-Each character in field will be 'Y' or 'N'.
+
+
+EXAMPLES
+
+0)
+{"NNNNN",
+ "NNYYN",
+ "NYNNN",
+ "NNYNN",
+ "NNNNN"}
+
+Returns: 4
+
+This is the field shown in the figure in the problem statement. As shown in figure (a), four elephants can drink at the same time. And as we only have four cells with water, this is clearly optimal.
+
+1)
+{"YYY",
+ "YYY",
+ "YYY"}
+
+
+Returns: 8
+
+It is possible for the elephants to drink from 8 cells at the same time. For example, a suitable set of 8 elephants can drink from all cells except for the one in the center. It is not possible for the elephants to drink from all 9 cells at the same time.
+
+2)
+ {"YNYN",
+  "NNYY",
+  "YYNN",
+  "YYYY"}
+
+Returns: 10
+
+
+
+3)
+ {"YNYN",
+  "YNYY",
+  "YYNN",
+  "YYYY"}
+
+Returns: 10
+
+
+
+4)
+{"YYNYN",
+ "NYNNY",
+ "YNYNN",
+ "YYNYY",
+ "YYNNN"}
+
+Returns: 12
+
+
+
+5)
+{"YYNYN",
+ "NYNYY",
+ "YNYYN",
+ "YYNYY",
+ "YYNNN"}
+
+Returns: 13
+
+
+
+6)
+{"NN",
+ "NN"}
+
+Returns: 0
+
+There can be no water at all.

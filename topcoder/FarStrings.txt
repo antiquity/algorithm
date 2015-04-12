@@ -1,0 +1,85 @@
+PROBLEM STATEMENT
+All strings in this problem are strings of lowercase English letters ('a'-'z').
+
+
+Given two strings S and T, their edit distance is defined as the smallest number of steps in which we can change S to T.
+In each step, we are allowed to make one of the following changes:
+
+Erasing one arbitrary character of S.
+Inserting one arbitrary character anywhere into S (including its beginning or end).
+Replacing one arbitrary character of S by a different character.
+
+
+For example:
+
+The edit distance between "color" and "coord" is 2.
+The edit distance between "banana" and "bnn" is 3.
+The edit distance between "aaaa" and "bbbb" is 4.
+
+
+You are given a String t.
+Let n be the length of t.
+Return a String[] with n elements.
+For each i, element i (0-based index) of the returned String[] must be the lexicographically smallest string with n characters such that the edit distance between t and the string is exactly i+1.
+
+
+DEFINITION
+Class:FarStrings
+Method:find
+Parameters:String
+Returns:String[]
+Method signature:String[] find(String t)
+
+
+NOTES
+-You may assume that for each valid test case there is at least one n-character string with each of the required edit distances.
+
+
+CONSTRAINTS
+-t will contain between 1 and 25 characters, inclusive.
+-Each character in t will be a lowercase English letter ('a'-'z').
+
+
+EXAMPLES
+
+0)
+"atan"
+
+Returns: {"aaan", "aaaa", "aaba", "babb" }
+
+Let d(s,u) denote the edit distance between the strings s and u. The return value shown above is correct because:
+
+d("atan", "aaan") = 1: we can change 't' to 'a'.
+d("atan", "aaaa") = 2: we can change 't' to 'a' and then 'n' to 'a'.
+d("atan", "aaba") = 3: one shortest sequence of changes is "atan" -> "aan" -> "aab" -> "aaba".
+d("atan", "babb") = 4: one shortest sequence of changes is "atan" -> "aan" -> "ban" -> "bab" -> "babb".
+The strings "aaan", "aaaa", "aaba", and "babb" are the lexicographically smallest strings with the given edit distance from "atan".
+
+
+1)
+"ir"
+
+Returns: {"ar", "aa" }
+
+
+
+2)
+"aaa"
+
+Returns: {"aab", "abb", "bbb" }
+
+
+
+3)
+"bazinga"
+
+Returns: {"aazinga", "aaainga", "aaaanga", "aaaaaga", "aaaaaaa", "aaaaaab", "abbaabb" }
+
+
+
+4)
+"bcdab"
+
+Returns: {"acdab", "aadab", "aaaab", "aaaaa", "aaaca" }
+
+

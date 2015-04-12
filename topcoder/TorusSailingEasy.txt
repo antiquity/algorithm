@@ -1,0 +1,93 @@
+PROBLEM STATEMENT
+
+Fox Ciel is sailing in the Donut sea. The Donut sea is a torus. For navigation, the torus is divided into N times M cells, as shown in the figure below.
+
+
+
+
+(Image by YassineMrabet from Wikimedia Commons, licensed under CC BY-SA 3.0.)
+
+
+
+Each of the cells has two integer coordinates (n, m), where 0 <= n < N and 0 <= m < M. Note that the coordinates wrap around modulo N and M. For example, if you are in the cell (N-1, M-1) and you cross over one of its sides, you will reach one of the cells (N-2, M-1), (0, M-1), (N-1, M-2), and (N-1, 0).
+
+
+
+Ciel starts in the cell (0, 0) and wants to reach the goal cell (goalX, goalY).
+
+
+
+Unfortunately, Ciel's navigation is very poor. Whenever she moves to a new cell, there are two equally probable outcomes: either both of her coordinates increase by 1, or both of them decrease by 1 (wrapping around if necessary). Formally, if Ciel's current coordinates are (n, m), her new coordinates will be either ((n+1) modulo N, (m+1) modulo M), or ((n-1) modulo N, (m-1) modulo M), with equal probability. Each such move takes one day.
+
+
+
+If Ciel can never reach her goal, return -1. Otherwise, return the expected number of days Ciel will need to reach her goal.
+
+
+
+DEFINITION
+Class:TorusSailingEasy
+Method:expectedTime
+Parameters:int, int, int, int
+Returns:double
+Method signature:double expectedTime(int N, int M, int goalX, int goalY)
+
+
+NOTES
+-The returned value must have an absolute or relative error less than 1e-9.
+-In many programming languages the modulo operator returns negative values for negative inputs. If you are using such a language, it is safer to use the formulas ((n-1+N) modulo N) and ((m-1+M) modulo M) to compute Ciel's new coordinates when both of them are supposed to decrease.
+-Informally, the expected value of a random variable can be seen as its average over very many trials.
+
+
+CONSTRAINTS
+-N will be between 2 and 10, inclusive.
+-M will be between 2 and 10, inclusive.
+-goalX will be between 0 and N - 1, inclusive.
+-goalY will be between 0 and M - 1, inclusive.
+-(goalX, goalY) will not be (0, 0).
+
+
+EXAMPLES
+
+0)
+2
+2
+1
+1
+
+Returns: 1.0
+
+She will always reach the goal in 1 day.
+
+1)
+2
+2
+0
+1
+
+Returns: -1.0
+
+It is impossible to reach the goal. Ciel will only visit the cells (0, 0) and (1, 1) alternately.
+
+2)
+3
+3
+1
+1
+
+Returns: 2.0
+
+She can reach the goal in 1 day with probability 1/2, in 2 days with probability 1/4, in 3 days with probability 1/8, in 4 days with probability 1/16 and so on. In general, she can reach the goal in n days with probability 1/(2^n) where n is a positive integer.
+
+The answer is (1 * 1/2) + (2 * 1/4) + (3 * 1/8) + (4 * 1/16) + ... = 2.0.
+
+
+3)
+4
+6
+1
+3
+
+Returns: 27.0
+
+

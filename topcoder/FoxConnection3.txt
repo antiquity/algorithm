@@ -1,0 +1,90 @@
+PROBLEM STATEMENT
+The infinite plane is divided into a grid of unit square cells.
+Two cells are considered adjacent if they share a side.
+There are some foxes on the plane.
+Each fox is currently standing on a different cell.
+This must also be preserved in the future - there cannot be two foxes in the same cell at the same time.
+
+
+Whenever a fox takes a step, it moves to a cell that is adjacent to its current cell.
+A set of cells is considered connected if a fox could walk from any cell in the set to any other cell in the set without leaving the set.
+
+
+All foxes want to get together.
+More precisely, they want to move in such a way that at the end the set of cells occupied by the foxes is connected.
+Return the smallest total number of steps the foxes need to make in order to reach such a configuration.
+
+
+DEFINITION
+Class:FoxConnection3
+Method:minimalSteps
+Parameters:int[], int[]
+Returns:long
+Method signature:long minimalSteps(int[] x, int[] y)
+
+
+CONSTRAINTS
+-x will contain between 1 and 6 elements, inclusive.
+-x and y will contain the same number of elements.
+-Each element in x will be between -1,000,000,000 and 1,000,000,000, inclusive.
+-Each element in y will be between -1,000,000,000 and 1,000,000,000, inclusive.
+-No two foxes will be at the same position.
+
+
+EXAMPLES
+
+0)
+{0,0,1,-2}
+{1,-1,0,0}
+
+Returns: 2
+
+The optimal solution is to move the last fox 2 steps to the right.
+
+1)
+{0,0,0,0,0,0}
+{1,2,3,4,5,6}
+
+Returns: 0
+
+Foxes are already connected, so we don't need any operations.
+
+2)
+{-123456789,-58585858,-47474747,123,456,789012345}
+{0,0,0,0,0,0}
+
+Returns: 1018530309
+
+
+
+3)
+{1,7,3,5,2}
+{2,7,5,3,7}
+
+Returns: 12
+
+
+
+4)
+{-3,0,1,-2,3,2}
+{2,-3,0,1,-1,-1}
+
+Returns: 10
+
+
+
+5)
+{-96277832,507856257,-86306299,-806700273,-775932643,-273209838}
+{-955536464,-599634138,399850429,-165706338,-537800480,738983556}
+
+Returns: 5247213600
+
+
+
+6)
+{0}
+{0}
+
+Returns: 0
+
+

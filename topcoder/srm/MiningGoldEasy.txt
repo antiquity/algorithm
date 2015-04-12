@@ -1,0 +1,103 @@
+PROBLEM STATEMENT
+You are a goblin miner.
+Your job is to mine gold.
+
+Picture yourself located in a mine.
+The mine can be seen as a rectangular grid of (N+1) times (M+1) cells.
+Rows are numbered 0 through N, columns 0 through M.
+
+You will work in the mine for several days.
+You can choose the cell where you will work today (on day 0).
+On each of the next days, you can either stay in the cell where you were on the previous day, or you can move to any other cell in the same row or in the same column.
+
+Whenever somebody discovers gold in the mine, each goblin profits!
+Your profit is N + M, minus your Manhattan distance from the cell where the gold was discovered.
+Formally, if the gold is discovered at (a, b) and you are located at (c, d), your profit is N + M - |a-c| - |b-d|, where || denotes absolute value.
+
+You are given the ints N and M.
+You are also given two int[]s: event_i and event_j.
+Both will contain the same number of elements.
+Assume that for each valid k, there will be exactly one gold discovery on day k: in the cell (event_i[k], event_j[k]).
+
+Compute and return the maximum total profit you can get by correctly choosing the cells where you work on each day.
+
+DEFINITION
+Class:MiningGoldEasy
+Method:GetMaximumGold
+Parameters:int, int, int[], int[]
+Returns:int
+Method signature:int GetMaximumGold(int N, int M, int[] event_i, int[] event_j)
+
+
+CONSTRAINTS
+-N and M will be between 1 and 1,000,000, inclusive.
+-event_i will contain between 1 and 50 elements, inclusive.
+-event_j will contain the same number of elements as event_i.
+-The elements of event_i will range between 0 and N, inclusive.
+-The elements of event_j will range between 0 and M, inclusive.
+
+
+EXAMPLES
+
+0)
+2
+2
+{0}
+{0}
+
+Returns: 4
+
+Gold will be discovered today in the cell (0, 0). Your optimal strategy is to work there today.
+
+1)
+2
+2
+{0, 2}
+{0, 1}
+
+Returns: 7
+
+Gold will be discovered in the cell (0, 0) today and in the cell (2, 1) tomorrow.
+Note that you cannot move directly from (0, 0) to (2, 1), because these cells are neither in the same row nor in the same column.
+One optimal strategy is to work in the cell (0, 0) today and in the cell (2, 0) tomorrow.
+Your profit today will be 4, tomorrow it will be 3, thus the total profit is 4+3 = 7.
+
+2)
+3
+3
+{0, 3, 3}
+{0, 3, 0}
+
+Returns: 15
+
+
+
+3)
+3
+4
+{0, 3}
+{4, 1}
+
+Returns: 11
+
+
+
+4)
+5
+6
+{0, 4, 2, 5, 0}
+{3, 4, 5, 6, 0}
+
+Returns: 48
+
+
+
+5)
+557
+919
+{81, 509, 428, 6, 448, 149, 77, 142, 40, 405, 109, 247}
+{653, 887, 770, 477, 53, 637, 201, 863, 576, 393, 512, 243}
+
+Returns: 16255
+
+

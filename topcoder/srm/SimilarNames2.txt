@@ -1,0 +1,95 @@
+PROBLEM STATEMENT
+Fox Ciel has a list of names on her computer. In this problem, a name is simply a non-empty string
+of lowercase letters. All names in her list are distinct.
+
+
+One day, when she left her seat, she forgot to lock her computer.
+Then, Lun the mischievous dog appeared, and randomly shuffled the order of the names in her list.
+
+
+Now, Ciel has to restore the original order of names using her memory. You are given a String[] names
+and an int L. names contains all names in the shuffled list in the order they appear.
+L describes Ciel's memory of the original list. She remembers that, for each i between 0 and
+L-2, inclusive, the i-th (0-indexed) name in the original list was a prefix of the (i+1)-th name.
+
+
+Let X be the number of possible orders of the names in the original list that are consistent
+with Ciel's memory. Calculate and return the value (X modulo 1,000,000,007). X can be 0, which means
+Ciel's memory is inconsistent with the names in the list.
+
+DEFINITION
+Class:SimilarNames2
+Method:count
+Parameters:String[], int
+Returns:int
+Method signature:int count(String[] names, int L)
+
+
+NOTES
+-A prefix of a string is the result of erasing zero or more characters from the right end of that string.
+
+
+CONSTRAINTS
+-names will contain between 2 and 50 elements, inclusive.
+-Each element of names will contain between 1 and 50 characters, inclusive.
+-Each character of each element of names will be a lowercase letter ('a'-'z').
+-Elements of names will be distinct.
+-L will be between 1 and n, inclusive, where n is the number of elements in names.
+
+
+EXAMPLES
+
+0)
+{"kenta", "kentaro", "ken"}
+2
+
+Returns: 3
+
+Here, Ciel's list contains 3 names. She remembers that the 0-th name was a prefix of the 1-st name in the original list. Here are the all possible orders of names in the original list:
+
+ken, kenta, kentaro
+ken, kentaro, kenta
+kenta, kentaro, ken
+
+Note that it is possible that the order of the names in the original list coincides with that of the shuffled list.
+
+1)
+{"hideo", "hideto", "hideki", "hide"}
+2
+
+Returns: 6
+
+Again, she remembers that the 0-th name was a prefix of the 1-st name in the original list. The only thing we can be sure is that the 0-th name was "hide".
+
+2)
+{"aya", "saku", "emi", "ayane", "sakura", "emika", "sakurako"}
+3
+
+Returns: 24
+
+This time, she remembers not only the fact that the 0-th name was a prefix of the 1-st name, but also the fact that the 1-st name was a prefix of the 2-nd name. The first 3 names should be "saku", "sakura", "sakurako" in this order.
+
+3)
+{"taro", "jiro", "hanako"}
+2
+
+Returns: 0
+
+No name is a prefix of another name in this case, so her memory is inconsistent.
+
+4)
+{"alice", "bob", "charlie"}
+1
+
+Returns: 6
+
+L = 1 means that she actually remembers nothing.
+
+5)
+{"ryota", "ryohei", "ryotaro", "ryo", "ryoga", "ryoma", "ryoko", "ryosuke", "ciel", "lun",
+ "ryuta", "ryuji", "ryuma", "ryujiro", "ryusuke", "ryutaro", "ryu", "ryuhei", "ryuichi", "evima"}
+3
+
+Returns: 276818566
+
+

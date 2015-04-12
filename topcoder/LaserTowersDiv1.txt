@@ -1,0 +1,124 @@
+PROBLEM STATEMENT
+You are playing a strategy game on a rectangular board.
+The board is divided into a grid of unit square cells.
+Some of the cells are occupied by enemies.
+It is now your turn and you want to eliminate as many enemies as possible.
+
+Some of the cells that are not occupied by enemy units contain your laser towers.
+Each laser tower is pointed in one of the four cardinal directions.
+The tower can target any single cell in its direction and eliminate all enemies in that cell.
+Note that the tower is tall and can target any cell in its direction, even if there are some enemies in cells that are closer than the target cell.
+
+For each tower, you have to decide whether it is going to shoot or not.
+Then, you have to choose a valid target cell for each of the towers that is going to shoot.
+Finally, all selected towers shoot their lasers at the same time and they eliminate all enemies in their target cells.
+
+You are also given two important pieces of information about the laser towers:
+
+For safety purposes, the towers were designed in such a way that no tower can target another tower. (You may assume that this is true in all test cases.)
+When you fire your laser towers, their laser beams are not allowed to cross, not even at their endpoints. That is, for each cell on the board there can be at most one laser tower that is shooting at or over that cell.
+
+
+You are given a String[] board that represents the board at the beginning of your turn, using the following format:
+
+Empty cells are represented by the character '.' (period).
+Characters '1' through '9' represent cells that contain 1 through 9 enemy units.
+Characters 'A', 'V', '<', and '>' represent laser towers pointed north, south, west, and east, respectively.
+
+
+Return the maximal total number of eliminated enemies.
+
+DEFINITION
+Class:LaserTowersDiv1
+Method:countMaxEnemies
+Parameters:String[]
+Returns:int
+Method signature:int countMaxEnemies(String[] board)
+
+
+CONSTRAINTS
+-board contains between 1 and 50 elements, inclusive.
+-Each element of board contains between 1 and 50 characters, inclusive.
+-All elements of board are of the same size.
+-No tower is directed towards another one.
+-Each character of the board is 'A', 'V', '<', '>', '.', or a digit between '1' and '9', inclusive.
+
+
+EXAMPLES
+
+0)
+{
+".9",
+">3",
+".A"
+}
+
+
+Returns: 9
+
+The lasers shouldn't cross (Even at their endpoints)
+
+
+1)
+{
+"..V..",
+">.54.",
+".>3.6",
+"9..A."
+}
+
+
+Returns: 12
+
+
+
+2)
+{
+".9V.",
+">..7",
+".A1."
+}
+
+
+Returns: 10
+
+
+
+3)
+{
+"........7..7......4...<...V9.5.",
+">.........2.........5..46......",
+".6...........9..<..>...5.......",
+".6...................<..A>...5.",
+".V>....................6.......",
+".....57.............<...>....7.",
+"..............6.........<V....7",
+"V..V7..V..AA>..............61..",
+"..V.......V..A.....>.....5.....",
+"......7....V....>.........7....",
+"1...........<>..............6..",
+"............5...........<......",
+".........6..V.......V...V..A...",
+".2...........<....A..>....7....",
+"5..........................<...",
+".............V...5...>.....6...",
+"........5.......V.V....A...>.8.",
+".....A.........7.....>......5..",
+"96.........................<...",
+"....AV..............7V.....VA.A",
+"..............5....6........<.V",
+"..6................<........V..",
+"....V..............>.......5..6",
+"8.6................<...>....6..",
+".........A.............V.....A.",
+".....6A........A.A.>.....6.....",
+"69....<.A>.............3.......",
+"...2.....<....A.......>...2.6..",
+"...76..5.....7..7..5........7<.",
+"...8.......6..<..V5>.....9..7..",
+"....7.....5.5.<>.4...7.556.4..."}
+
+
+Returns: 328
+
+

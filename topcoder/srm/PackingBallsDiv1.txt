@@ -1,0 +1,85 @@
+PROBLEM STATEMENT
+We have balls of K different colors.
+The colors are numbered 0 through K-1, and the number of balls of color i is X[i].
+We want to divide the balls into as few packages as possible.
+Each package must contain between 1 and K balls, inclusive.
+Additionally, each package must be either a "normal set" (all balls in the package have the same color), or a "variety set" (no two balls have the same color).
+
+You are given the int K.
+You are also given ints A, B, C, and D.
+Use these to generate the array X using the following pseudocode:
+
+X[0] = A
+for i = 1 to K-1:
+    X[i] = (X[i-1] * B + C) % D + 1
+
+
+Compute and return the smallest possible number of packages.
+
+DEFINITION
+Class:PackingBallsDiv1
+Method:minPacks
+Parameters:int, int, int, int, int
+Returns:int
+Method signature:int minPacks(int K, int A, int B, int C, int D)
+
+
+NOTES
+-You can assume that the answer will fit into a signed 32-bit integer.
+
+
+CONSTRAINTS
+-K will be between 1 and 100,000, inclusive.
+-B, C and D will be between 1 and 1,000,000,000, inclusive.
+-A will be between 1 and D, inclusive.
+
+
+EXAMPLES
+
+0)
+3
+4
+2
+5
+6
+
+Returns: 4
+
+There are three colors of balls.
+Using the pseudocode in the problem statement, we can compute that X[0]=4, X[1]=2, and X[2]=4.
+As there are 10 balls and we can only put at most 3 into each package, we need at least 4 packages.
+One possible solution with 4 packages is {0,1,2}, {0,0}, {0,1}, and {2,2,2}.
+(That is, the first package contains one ball of each color, the second package contains two balls of color 0, and so on.)
+
+1)
+1
+58
+23
+39
+93
+
+Returns: 58
+
+All the balls have the same color, and each package can only contain one ball. Thus, the number of packages is the same as the number of balls.
+
+2)
+23
+10988
+5573
+4384
+100007
+
+Returns: 47743
+
+
+
+3)
+100000
+123456789
+234567890
+345678901
+1000000000
+
+Returns: 331988732
+
+Watch out for integer overflow when generating X.

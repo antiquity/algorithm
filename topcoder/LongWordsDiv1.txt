@@ -1,0 +1,59 @@
+PROBLEM STATEMENT
+Fox Ciel uses an alphabet that has n letters. She likes all the words that have the following properties:
+
+Equal letters are never consecutive.
+There is no subsequence of the form xyxy, where x and y are (not necessarily distinct) letters. Note that a subsequence doesn't have to be contiguous.
+There is no longer word with properties 1 and 2.
+
+Examples:
+
+Ciel does not like "ABBA" because there are two consecutive 'B's.
+Ciel does not like "THETOPCODER" because it contains the subsequence "TETE".
+Ciel does not like "ABACADA" because it contains the subsequence "AAAA". (Note that here x=y='A'.)
+Ciel does not like "ABCA" because "ABCBA" is longer.
+If n=1 and the one letter Ciel uses is 'A', then she likes the word "A".
+If n=2 and the two letters Ciel uses are 'A' and 'B', then she likes the words "ABA" and "BAB".
+
+Given the int n, compute and return the number of words Ciel likes, modulo 1,000,000,007.
+
+DEFINITION
+Class:LongWordsDiv1
+Method:count
+Parameters:int
+Returns:int
+Method signature:int count(int n)
+
+
+CONSTRAINTS
+-n will be between 1 and 5000, inclusive.
+
+
+EXAMPLES
+
+0)
+1
+
+Returns: 1
+
+The only word Ciel likes is "A" (assuming 'A' is the only letter in the alphabet).
+
+1)
+2
+
+Returns: 2
+
+The words Ciel likes are "ABA" and "BAB".
+
+2)
+5
+
+Returns: 1080
+
+
+
+3)
+100
+
+Returns: 486425238
+
+Don't forget to compute the answer modulo 1,000,000,007.

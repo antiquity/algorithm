@@ -1,0 +1,85 @@
+PROBLEM STATEMENT
+You have N computers numbered 0 through N-1.
+They are connected into a single network.
+The topology of the network is a tree.
+You are given its description as int[]s parent and dist.
+Each of the int[]s contains exactly N-1 elements.
+For each i between 0 and N-2, inclusive, there is a cable connecting computers i+1 and parent[i], and the length of that cable is dist[i].
+
+You are also given an int maxDist with the following meaning:
+The distance between any two computers in the same network must not exceed maxDist.
+(The distance between two computers is defined as the total length of cable between them.)
+If this is currently not the case for your network, you have to divide it into several smaller networks.
+
+Formally, it means that you need to choose the number K of smaller networks you will have.
+Then you need to assign each of your computers into exactly one of the K networks.
+The following properties must be satisfied:
+
+Each of the K new networks must form a connected subtree of the original tree.
+The diameter of each new network must be at most maxDist.
+
+Return the smallest value of K for which it is possible to divide the original network into K new networks with the above properties.
+
+
+DEFINITION
+Class:Ethernet
+Method:connect
+Parameters:int[], int[], int
+Returns:int
+Method signature:int connect(int[] parent, int[] dist, int maxDist)
+
+
+CONSTRAINTS
+-parent will contain between 1 and 50 elements, inclusive.
+-dist will contain the same number of elements as parent.
+-For each valid i, the i-th element of parent will be between 0 and i, inclusive.
+-Each element of dist will be between 1 and 500, inclusive.
+-maxDist will be between 1 and 500, inclusive.
+
+
+EXAMPLES
+
+0)
+{0,0,0}
+{1,1,1}
+2
+
+Returns: 1
+
+The diameter of this network is 2, which is small enough.
+
+1)
+{0,0,0,0,0,0,0}
+{1,2,3,4,5,6,7}
+8
+
+Returns: 4
+
+One optimal solution: the new networks will be formed by computers {4}, {6}, {7}, and {0,1,2,3,5}.
+
+2)
+{0,1,2,3,4,5}
+{1,2,3,4,5,6}
+6
+
+Returns: 3
+
+One optimal solution is to put computers {0,1,2,3} into the first new network, {4,5} into the second one, and {6} will be the third network.
+
+3)
+{0,0,0,1,1}
+{1,1,1,1,1}
+2
+
+Returns: 2
+
+The two new networks can be {0,2,3} and {1,4,5}.
+
+4)
+{0,1,0,3,0,5,0,6,0,6,0,6,4,6,9,4,5,5,2,5,2}
+{93,42,104,105,59,73,161,130,30,81,62,93,131,133,139,5,13,34,25,111,4}
+162
+
+Returns: 11
+
+
