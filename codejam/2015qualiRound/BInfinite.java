@@ -1,9 +1,9 @@
 import java.io.*;
 import java.util.*;
 
-public class Infinite{
+public class BInfinite{
     public static void main(String[] argin) {
-        Infinite inst = new Infinite();
+        BInfinite inst = new BInfinite();
         try{
             BufferedReader in = new BufferedReader(new FileReader(argin[0]));
             //PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("out.txt")));

@@ -2,7 +2,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Dijkstra{
+public class CDijkstra{
     byte[][] matrix={
         {0, 0, 0, 0, 0},
         {0, 1, 2, 3, 4},
@@ -27,7 +27,7 @@ public class Dijkstra{
     byte[] pxL = new byte[LL+1];
 
     public static void main(String[] argin) {
-        Dijkstra inst = new Dijkstra();
+        CDijkstra inst = new CDijkstra();
         try{
             BufferedReader in = new BufferedReader(new FileReader(argin[0]));
             //PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("out.txt")));
