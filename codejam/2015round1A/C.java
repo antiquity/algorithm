@@ -2,11 +2,12 @@ import java.io.*;
 import java.util.*;
 
 public class C{
-    int[][] map= new int[3000][3000];
-    void solver(int N, Point[] p){
+    void betterSolver(int N, Point[] p){
         Line l;
         int a,b,c;
         int min,temp;
+        int[] map= new int[N];
+        Arrays.fill(map,N-1);
         for(int i=0; i<N; i++){
             for(int j=i+1; j<N; j++){
                 l=new Line(p[i],p[j]);
@@ -17,57 +18,57 @@ public class C{
                     if(c<0) b++;
                 }
                 temp=Math.min(a,b);
-                map[i][j]=temp;
-                map[j][i]=temp;
+                map[i]=Math.min(map[i],temp);
+                map[j]=Math.min(map[j],temp);
             }
-            min=N-1;
-            for(int j=0; j<N; j++) if(j!=i && map[i][j]<min)
-                min=map[i][j];
-            System.out.println(min);
+        }
+        for(int i=0; i<N; i++){
+            System.out.println(map[i]);
         }
     }
-    void betterSolver(int N, Point[] p){
-        List<Double> lst = new ArrayList<Double>();
-        double theta;
-        int res=0,temp,cnt;
+    void solver(int N, Point[] p){
+        double[] lst=new double[N-1];
+        double theta,temp;
+        int res=0,ll,ss,k;
         for(int i=0; i<N; i++){
-            lst.clear();
-            for(int j=0; j<N; j++) if(j!=i){
-                theta=Math.atan2(p[j].y-p[i].y, p[j].x-p[i].x)/Math.PI;
-                lst.add(theta);
-                lst.add(theta+2);
-            }
+            k=0;
+            for(int j=0; j<N; j++) if(j!=i)
+                lst[k++]=Math.atan2(p[j].y-p[i].y, p[j].x-p[i].x)/Math.PI;
             res=N-1;
-            Collections.sort(lst);
-            //System.out.println(lst);
-            for(int j=0; j<lst.size() && (theta=lst.get(j))<1; j++){
-                temp=j+1;
-                while(temp<lst.size()
-                        && lst.get(temp)>theta+Math.ulp(theta)
-                        && lst.get(temp)<theta+1-Math.ulp(theta))
-                    temp++;
-                res=Math.min(res,Math.min(temp-j-1, N-2+j+1-temp));
+            Arrays.sort(lst);
+            //System.out.println(Arrays.toString(lst));
+            for(int j=0; j<N-1; j++){
+                theta=lst[j];
+                ll=0; ss=0;
+                for(k=1; k<N-1; k++){
+                    temp=lst[(j+k)%(N-1)];
+                    if(!((temp>theta && temp-theta-1<-1e-12)
+                        || (temp< theta && temp+1-theta<-1e-12)))
+                        break;
+                    temp=lst[(j-k+N-1)%(N-1)];
+                    if(!((temp<theta && theta-temp-1<-1e-12)
+                        || (temp>theta && theta-temp+1<-1e-12)))
+                        break;
+                    ll++;
+                }
+                res=Math.min(res,ll);
                 //System.out.format("theta=%g, j=%d, temp=%d, res=%d\n", theta,j,temp,res);
             }
             System.out.println(res);
         }
     }
     class Line{
-        Point p1,p2;
         long a,b,c;
-        Line(Point pp1,Point pp2){
-            p1=pp1; p2=pp2;
+        Line(Point p1,Point p2){
             a = (p2.y-p1.y);
             b=-(p2.x-p1.x);
             c=p1.x*p2.y-p2.x*p1.y;
-            if(a<0){ a=-a; b=-b; c=-c;}
-            if(a==0 && b<0){ b=-b; c=-c;}
         }
         int onRight(Point p3){
             long d=a*p3.x+b*p3.y-c;
-            if(d>0) d=1;
-            if(d<0) d=-1;
-            return (int)d;
+            if(d>0) return 1;
+            if(d<0) return -1;
+            return 0;
         }
     }
     class Point{

@@ -14,12 +14,36 @@ public class Solution {
         }
         return true;
     }
-    public List<String> generateParenthesis(int n) {
-        List<String> ret = new ArrayList<String>();
-        char[] str = new char [2*n];
-        int o=0, c = 0;
-        int i = 0;
-        while(i>=0){
+    /**
+     * Definition for binary tree
+     * public class TreeNode {
+     *     int val;
+     *     TreeNode left;
+     *     TreeNode right;
+     *     TreeNode(int x) { val = x; }
+     * }
+     */
+        public boolean isBalanced(TreeNode root) {
+            return solve(root,0)>=0;
+        }
+        int solve(TreeNode root, int l){
+            if(root==null) return l;
+            int left, right;
+            left=solve(root.left,l+1);
+            if(left>=0){
+                right=solve(root.right,l+1);
+                if(right>=0 && Math.abs(left-right)<=1)
+                    return Math.max(left,right);
+                else
+                    return -1;
+            }else return -1;
+        }
+        public List<String> generateParenthesis(int n) {
+            List<String> ret = new ArrayList<String>();
+            char[] str = new char [2*n];
+            int o=0, c = 0;
+            int i = 0;
+            while(i>=0){
             switch (str[i]) {
                 case '(':
                     o--;
