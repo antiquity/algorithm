@@ -1,6 +1,62 @@
 import java.util.*;
 
 public class Solution {
+    public int romanToInt(String s) {
+        int ret=0,i=0,temp,N=s.length();
+        s.toLowerCase();
+        while(i<N){
+            temp=0;
+            switch (s.charAt(i)){
+                case 'M':
+                    while(i<N && s.charAt(i)=='M'){ i++; temp+=1000; }
+                    break;
+                case 'C':
+                    while(i<N && s.charAt(i)=='C'){ i++; temp+=100; }
+                case 'D':
+                    if(i<N && s.charAt(i)=='D'){ temp=500-temp; i++; }
+                    while(i<N && s.charAt(i)=='C'){ i++; temp+=100; }
+                    if(i<N && s.charAt(i)=='M'){ temp=1000-temp; i++; }
+                    break;
+                case 'X':
+                    while(i<N && s.charAt(i)=='X'){ i++; temp+=10; }
+                case 'L':
+                    if(i<N && s.charAt(i)=='L'){ temp=50-temp; i++; }
+                    while(i<N && s.charAt(i)=='X'){ i++; temp+=10; }
+                    if(i<N && s.charAt(i)=='C'){ temp=100-temp; i++; }
+                    break;
+                case 'I':
+                    while(i<N && s.charAt(i)=='I'){ i++; temp+=1; }
+                case 'V':
+                    if(i<N && s.charAt(i)=='V'){ temp=5-temp; i++; }
+                    while(i<N && s.charAt(i)=='I'){ i++; temp+=1; }
+                    if(i<N && s.charAt(i)=='X'){ temp=10-temp; i++; }
+                    break;
+            }
+            ret+=temp;
+        }
+        return  ret;
+    }
+    public String intToRoman(int num) {
+        String ret="";
+        ret+=toRoman(num/1000,'M','?','&');
+        ret+=toRoman((num%1000)/100,'C','D','M');
+        ret+=toRoman((num%100)/10,'X','L','C');
+        ret+=toRoman((num%10),'I','V','X');
+        return ret;
+    }
+    String toRoman(int x, char one, char five, char ten){
+        String ret="";
+        if(x==0) return "";
+        else if(x<=3)
+            for(int i=0; i<x; i++) ret+=one;
+        else if(x==4)
+            ret=ret+one+five;
+        else if(x<=8){
+            ret+=five;
+            for(int i=0; i<x-5; i++) ret+=one;
+        }else ret=ret+one+ten;
+        return ret;
+    }
     public boolean isPalindrome(String s) {
         int n=s.length();
         int a=0, b=s.length()-1;
@@ -15,14 +71,13 @@ public class Solution {
         return true;
     }
     /**
-     * Definition for binary tree
-     * public class TreeNode {
-     *     int val;
-     *     TreeNode left;
-     *     TreeNode right;
-     *     TreeNode(int x) { val = x; }
-     * }
-     */
+     * Definition for binary tree*/
+      public class TreeNode {
+          int val;
+          TreeNode left;
+          TreeNode right;
+          TreeNode(int x) { val = x; }
+      }
         public boolean isBalanced(TreeNode root) {
             return solve(root,0)>=0;
         }
@@ -105,24 +160,6 @@ public class Solution {
         curr.next=null;
         tail.next=head;
         return temp;
-    }
-    public ListNode deleteDuplicates(ListNode head) {
-        Set set = new HashSet();
-        if(head==null) return null;
-        set.add(head.val);
-        ListNode curr = head.next, pre=head;
-        while(curr!=null){
-            //System.out.println(set);
-            if(set.contains(curr.val)){
-                pre.next=curr.next;
-                curr = curr.next;
-            }else{
-                set.add(curr.val);
-                curr = curr.next;
-                pre = pre.next;
-            }
-        }
-        return head;
     }
     public boolean subIsScramble(String s1, String s2, boolean top) {
         int n = s1.length();
@@ -335,6 +372,24 @@ public class Solution {
 
     }
     public ListNode deleteDuplicates(ListNode head) {
+        Set set = new HashSet();
+        if(head==null) return null;
+        set.add(head.val);
+        ListNode curr = head.next, pre=head;
+        while(curr!=null){
+            //System.out.println(set);
+            if(set.contains(curr.val)){
+                pre.next=curr.next;
+                curr = curr.next;
+            }else{
+                set.add(curr.val);
+                curr = curr.next;
+                pre = pre.next;
+            }
+        }
+        return head;
+    }
+    public ListNode deleteDuplicatesII(ListNode head) {
         if(head==null) return head;
         ListNode curr=head;
         boolean same=false;
