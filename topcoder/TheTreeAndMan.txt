@@ -1,0 +1,96 @@
+PROBLEM STATEMENT
+You have a rooted tree with N vertices.
+All edges of the tree are directed away from the root.
+Hence, all vertices are reachable from the root.
+
+The vertices are numbered 0 through N-1, with 0 being the root.
+For each edge, the parent has a smaller number than the child.
+You are given the description of the tree in a int[] parent with N-1 elements.
+For each valid i, the vertex parent[i] is the parent of the vertex i+1.
+
+A sequence M of 7 different vertices is called a Man if:
+
+ The 2nd element of M is reachable from the 1st element of M
+ The 3rd element of M is reachable from the 2nd element of M
+ The 4th element of M is reachable from the 2nd element of M
+ The 5th element of M is reachable from the 2nd element of M
+ The 6th element of M is reachable from the 5th element of M
+ The 7th element of M is reachable from the 5th element of M
+ The six paths that correspond to the previous six items are disjoint. (I.e., they have no edges in common.)
+
+
+Two Men are different if there is a vertex v that is among the seven vertices in one of them but not in the other.
+Note that the order of vertices does not matter.
+For example, if (1,2,3,4,5,6,7) is a valid Man, (1,2,3,4,5,7,6) is also valid and it is the same Man.
+
+Let X be the number of different Men in the given tree.
+Compute and return the value (X modulo 1,000,000,007).
+
+DEFINITION
+Class:TheTreeAndMan
+Method:solve
+Parameters:int[]
+Returns:int
+Method signature:int solve(int[] parent)
+
+
+CONSTRAINTS
+-N will be between 2 and 2000, inclusive.
+-parent will contain exactly N - 1 elements.
+-For each valid i, parent[i] will be between 0 and i, inclusive.
+
+
+EXAMPLES
+
+0)
+{0,1,1,1,4,4}
+
+Returns: 1
+
+This is the Man: 
+
+
+1)
+{0,0,2,2,2,4,0,4,7,2,10,11,9,0,1,0}
+
+Returns: 7
+
+
+
+2)
+{0,0,2,2,3,1,0,1,5}
+
+Returns: 0
+
+
+
+3)
+{0,0,0,2,3,5,2,5,3,7,7,7,2}
+
+Returns: 3
+
+
+
+4)
+{0,0,1,2,2,2,1,4,2,9,0,1,5}
+
+Returns: 0
+
+
+
+5)
+{0,0,0,2,4,2,5,6,5,9,5,0,3,8,8,15,0,17,9}
+
+Returns: 3
+
+
+
+6)
+{0,0,0,3,0,1,3,5,6,8,2,7,1,9,1,5,13,6,3,7,8,4,2,18,12,11,17,13,10,25,11,26,22,32,32,18,35,33,25,31,24,38,41,34,43,42,32,
+43,31,35,47,49,36,35,39,42,36,39,47,53,40,61,60,43,47,61,51,56,67,69,53,53,63,56,71,55,76,73,70,74,67,76,64,80,68,85,78,
+69,79,73,70,75,77,81,80,94,85,88,88,99,83,99,93,90,85,100,89,96,96,103,107,96,105,95,100,97,97}
+
+
+Returns: 9864
+
+

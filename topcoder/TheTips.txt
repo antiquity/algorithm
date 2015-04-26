@@ -1,0 +1,93 @@
+PROBLEM STATEMENT
+The "Tips" game is played by a single player in a room full of stuff.
+Before the game, the game master has hidden N clues somewhere in the room.
+The clues are numbered 0 through N-1.
+Your task is to find as many of these clues as possible.
+
+
+The probability that you'll find clue i without any information is probability[i] percent.
+Each clue you'll find will tell you the locations of some clues.
+If you already know the location of a clue you are certain to find it.
+
+
+You are given a String[] clues with the information on the content of the clues.
+For each valid i and j, clues[i][j] will be either 'Y' or 'N'.
+Here, 'Y' means that clue i contains the location of clue j, and 'N' means that it does not.
+You are also given the int[] probability.
+
+
+Compute and return the expected number of clues you will find during the game.
+
+
+DEFINITION
+Class:TheTips
+Method:solve
+Parameters:String[], int[]
+Returns:double
+Method signature:double solve(String[] clues, int[] probability)
+
+
+NOTES
+-The return value is correct if the relative error or the absolute error is at most 1e-9.
+-You can follow the link http://en.wikipedia.org/wiki/Expected_value for extra information about expected value.
+
+
+CONSTRAINTS
+-N will be between 1 and 50, inclusive.
+-clues and probability will contain exactly N elements each.
+-Each element of clues will contain exactly N characters.
+-Each character of each element of clues will be 'Y' or 'N'.
+-Each element of probability will be between 0 and 100, inclusive.
+
+
+EXAMPLES
+
+0)
+{"Y"}
+{50}
+
+Returns: 0.5
+
+There is only one clue. You will find it with probability 0.5. Hence, the expected number of clues you'll find is 0.5.
+
+1)
+{"YN","NY"}
+{100,50}
+
+Returns: 1.5
+
+Here, each clue only contains the (useless) information about its own location. You are certain to find clue 0 and you will only find clue 1 with probability 0.5.
+
+2)
+{"YYY","NYY","NNY"}
+{100,0,0}
+
+Returns: 3.0
+
+You are certain to find clue 0. This clue will tell you the locations of the two remaining clues and thus you will be able to find those too.
+
+3)
+{"NNN","NNN","NNN"}
+{0,0,0}
+
+Returns: 0.0
+
+You will not find any clue.
+
+4)
+{"NYYNYYNNNN","NNNNYNNNYN","YNNYYYYYNN","YYNYNNNNYN","NYNNNNNNNY","YNYYNNYNNY","NYNNYYYYYY","NYYYYNNNNN","YYNYNNYYYN","NNYYNYNYYY"}
+
+{11,66,99,37,64,45,21,67,71,62}
+
+
+Returns: 9.999891558057332
+
+
+
+5)
+{"NNY","NNY","NNN"}
+{50, 50, 1}
+
+Returns: 1.7525
+
+In order to find clue 2 you need to find at least one of the clues 0 and 1, or you need to be really lucky.

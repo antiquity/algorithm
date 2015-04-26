@@ -1,0 +1,85 @@
+PROBLEM STATEMENT
+
+You are given a int[] A.
+All elements of A are positive integers.
+
+
+
+A pair (i,j) is called valid if i <= j and both i and j are valid indices into A.
+The valid pair (i,j) determines the subarray A(i,j) = { A[i], A[i+1], ..., A[j] }.
+A valid pair (i,j) is called nice if there is an integer v > 1 that divides at least half of the elements of A(i,j).
+
+
+
+For example, if we have A(i,j) = { 3, 3, 47, 6, 1, 10 } then the pair (i,j) is nice because three of the six numbers in A(i,j) are divisible by v=3.
+
+
+
+If there are no valid pairs for the given A, return -1.
+Otherwise, return the largest k such that there is a valid pair (i,j) with j-i = k.
+
+
+DEFINITION
+Class:TheNicePair
+Method:solve
+Parameters:int[]
+Returns:int
+Method signature:int solve(int[] A)
+
+
+CONSTRAINTS
+-A will contain between 1 and 50 elements, inclusive.
+-Each element of A will be between 1 and 1000, inclusive.
+
+
+EXAMPLES
+
+0)
+{5,5,5,5,5}
+
+Returns: 4
+
+All elements of A are divisible by 5. Hence, (0,4) is a valid pair and the correct return value is 4-0 = 4.
+
+1)
+{1,1,1,1}
+
+Returns: -1
+
+There are no nice pair, so the answer is -1.
+
+
+2)
+{2,3,5,7}
+
+Returns: 1
+
+The following pairs are nice: (0,1), (1,2), (2,3), (0,0), (1,1), (2,2), (3,3).
+
+3)
+{8,8,5,5,5}
+
+Returns: 4
+
+There are multiple nice pairs here. Among them, the pair (i,j) = (0,4) has the maximal value of j-i.
+
+4)
+{1,1000,1000,1,1000,1,999}
+
+Returns: 5
+
+
+
+5)
+{1000,1,1,1000}
+
+Returns: 3
+
+
+
+6)
+{1,1,953,1,1,1,1,1,1,1,1,1,1,1,1,953,1,953,953,1,1,1,1,1,1,1,953,953,953,1,1,1,1,1,953,953,1,1,1,953,953,953,1}
+
+Returns: 15
+
+
