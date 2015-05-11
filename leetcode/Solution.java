@@ -1,6 +1,52 @@
 import java.util.*;
+import java.io.*;
 
 public class Solution {
+    PrintStream out=System.out;
+    public int maximalRectangle(char[][] matrix) {
+        int ret=0, r=matrix.length, c=0;
+        if(r>0) c=matrix[0].length;
+        int k,l,kk,ll,ii,jj;
+        for(int i=0; i<r; i++) for(int j=0; j<c; j++) if(matrix[i][j]=='1'){
+            k=r-1; l=c-1;
+            ii=i; jj=j;
+            out.format("i=%d, j=%d, ii=%d, jj=%d, k=%d, l=%d\n",i,j,ii,jj,k,l);
+outer:
+            while(k>=i){
+                for(ll=jj; ll<=l; ll++){
+                    for(kk=ii; kk<=k; kk++)
+                        if(matrix[kk][ll]=='0'){
+                            ret=Math.max(ret,(k-i+1)*(ll-j));
+                            k=kk-1;
+                            jj=ll;
+                            continue outer;
+                        }
+                }
+                ret=Math.max(ret,(k-i+1)*(l-j+1));
+                break;
+            }
+           
+        }
+        return ret;
+    }
+    public int largestRectangleArea(int[] height) {
+        Deque<Integer> s = new ArrayDeque<Integer>();
+        int ret=0,h;
+        for(int i=0; i<height.length; i++){
+            if(!s.isEmpty() && height[s.peekFirst()]>=height[i])
+                while(!s.isEmpty() && height[s.peekFirst()]>=height[i]){
+                    h=height[s.removeFirst()];
+                    ret=Math.max(ret,h*(s.isEmpty() ? i : i-s.peekFirst()-1));
+                }
+            s.addFirst(i);
+            //System.out.println(s);
+        }
+        while(!s.isEmpty()){
+            h=height[s.removeFirst()];
+            ret=Math.max(ret,h*(s.isEmpty() ? height.length : height.length-s.peekFirst()-1));
+        }
+        return ret;
+    }
     public int romanToInt(String s) {
         int ret=0,i=0,temp,N=s.length();
         s.toLowerCase();
@@ -424,6 +470,9 @@ public class Solution {
     }
     public static void main(String[] args){
         Solution test = new Solution();
+        System.out.println(test.maximalRectangle(new char[][]{{'1'}}));
+        System.out.println(test.maximalRectangle(new char[][]{{'0','1'},{'1','0'}}));
+        System.out.println(test.largestRectangleArea(new int[]{1,1}));
         int[][] rpoints ={{-435,-347},{-435,-347},{609,613},{-348,-267},{-174,-107},{87,133},{-87,-27},{-609,-507},{435,453},{-870,-747},{-783,-667},{0,53},{-174,-107},{783,773},{-261,-187},{-609,-507},{-261,-187},{-87,-27},{87,133},{783,773},{-783,-667},{-609,-507},{-435,-347},{783,773},{-870,-747},{87,133},{87,133},{870,853},{696,693},{0,53},{174,213},{-783,-667},{-609,-507},{261,293},{435,453},{261,293},{435,453}};
         Point[] points= new Point[rpoints.length];
         for(int i=0; i<points.length; i++) points[i]=test.new Point(rpoints[i][0],rpoints[i][1]);
