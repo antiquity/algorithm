@@ -140,6 +140,38 @@ outerc:
         char[][] board= new char[str.length][str[0].length()];
         for(int i=0; i<str.length; i++) board[i]=str[i].toCharArray();
         solve(board);
+    public int minDistance(String w1, String w2) {
+        int M=w1.length(), N=w2.length();
+        int[][] dp = new int[M+1][N+1];
+        int ret;
+        for(int j=0; j<=N; j++) dp[0][j]=j;
+        for(int i=1; i<=M; i++){
+            dp[i][0]=i;
+            for(int j=1; j<=N; j++){
+                ret=dp[i-1][j-1];
+                if(w1.charAt(i-1)!=w2.charAt(j-1)) ret++;
+                ret=Math.min(ret,1+dp[i-1][j]);
+                ret=Math.min(ret,1+dp[i][j-1]);
+                dp[i][j]=ret;
+            }
+        }
+        return dp[M][N];
+    }
+    public boolean isMatch(String s, String p) {
+        return true;
+    }
+    public int compareVersion(String v1, String v2) {
+        String[] a1=v1.trim().split("\\.");
+        String[] a2=v2.trim().split("\\.");
+        int n = Math.max(a1.length, a2.length);
+        for(int i=0; i<n; i++){
+            long a,b;
+            if(i<a1.length) a=Long.parseLong(a1[i]); else a=0;
+            if(i<a2.length) b=Long.parseLong(a2[i]); else b=0;
+            if(a>b) return 1;
+            else if(a<b) return -1;
+        }
+        return 0;
     }
     boolean diff(String a, String b){
         if(a.length()!=b.length()) return false;
@@ -172,9 +204,9 @@ outerc:
         for(int i=0; i<N; i++) if(dic[i].equals(end)){
             en=i; break;
         }
-//      out.println(Arrays.toString(dic));
-//      out.println("from "+start +"  ->  "+end);
-//      out.println("from "+st +"  ->  "+en);
+        //      out.println(Arrays.toString(dic));
+        //      out.println("from "+start +"  ->  "+end);
+        //      out.println("from "+st +"  ->  "+en);
 
         List<Integer> q = new ArrayList<Integer>();
         int[] visited = new int[N];
@@ -184,10 +216,10 @@ outerc:
         q.add(st); visited[st]=0; visited[en]=Integer.MAX_VALUE;
         int i=0, temp;
         while(i<q.size()){
-//            out.format("i=%d\n",i);
-//            out.println(q);
-//            out.println(Arrays.toString(visited));
-//            out.println(Arrays.toString(prev));
+            //            out.format("i=%d\n",i);
+            //            out.println(q);
+            //            out.println(Arrays.toString(visited));
+            //            out.println(Arrays.toString(prev));
             temp=q.get(i);
             if(visited[temp]>=visited[en]) break;
             for(int k:map.get(temp)) if(visited[k]>=visited[temp]+1){
@@ -217,8 +249,8 @@ outerc:
                 }
                 if(!route.isEmpty())route.remove(0);
             }
-//          out.println(route);
-//      for(List<String> aa : ret) out.println(aa);
+            //          out.println(route);
+            //      for(List<String> aa : ret) out.println(aa);
         }
         for(List<String> aa : ret) out.println(aa);
         return ret;
@@ -272,7 +304,7 @@ outer:
                 ret=Math.max(ret,(k-i+1)*(l-j+1));
                 break;
             }
-           
+
         }
         return ret;
     }
@@ -365,33 +397,33 @@ outer:
     }
     /**
      * Definition for binary tree*/
-      public class TreeNode {
-          int val;
-          TreeNode left;
-          TreeNode right;
-          TreeNode(int x) { val = x; }
-      }
-        public boolean isBalanced(TreeNode root) {
-            return solve(root,0)>=0;
-        }
-        int solve(TreeNode root, int l){
-            if(root==null) return l;
-            int left, right;
-            left=solve(root.left,l+1);
-            if(left>=0){
-                right=solve(root.right,l+1);
-                if(right>=0 && Math.abs(left-right)<=1)
-                    return Math.max(left,right);
-                else
-                    return -1;
-            }else return -1;
-        }
-        public List<String> generateParenthesis(int n) {
-            List<String> ret = new ArrayList<String>();
-            char[] str = new char [2*n];
-            int o=0, c = 0;
-            int i = 0;
-            while(i>=0){
+    public class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+        TreeNode(int x) { val = x; }
+    }
+    public boolean isBalanced(TreeNode root) {
+        return solve(root,0)>=0;
+    }
+    int solve(TreeNode root, int l){
+        if(root==null) return l;
+        int left, right;
+        left=solve(root.left,l+1);
+        if(left>=0){
+            right=solve(root.right,l+1);
+            if(right>=0 && Math.abs(left-right)<=1)
+                return Math.max(left,right);
+            else
+                return -1;
+        }else return -1;
+    }
+    public List<String> generateParenthesis(int n) {
+        List<String> ret = new ArrayList<String>();
+        char[] str = new char [2*n];
+        int o=0, c = 0;
+        int i = 0;
+        while(i>=0){
             switch (str[i]) {
                 case '(':
                     o--;
@@ -528,7 +560,7 @@ outer:
         if(good) return true;
         good=true;
         try{
-           double d= Double.parseDouble(s);
+            double d= Double.parseDouble(s);
             System.err.println("double: "+d);
         }catch(NumberFormatException e){ good=false; }
         if(good) return true;
@@ -717,9 +749,15 @@ outer:
     }
     public static void main(String[] args){
         Solution test = new Solution();
+<<<<<<< HEAD
         System.out.println(test.wordBreak("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab", new HashSet<String>(Arrays.asList(new String[]{"a","aa","aaa","aaaa","aaaaa","aaaaaa","aaaaaaa","aaaaaaaa","aaaaaaaaa","aaaaaaaaaa"}))));
         System.out.println(test.shortestPalindrome("abcd"));
         test.solve(new String[]{"OOOOXX","OOOOOO","OXOXOO","OXOOXO","OXOXOO","OXOOOO"});
+=======
+        System.out.println("minDistance"+test.minDistance("dini","ainia"));
+        System.out.println("minDistance"+test.minDistance("dinitrophenylhydrazine","acetylphenylhydrazine"));
+        test.compareVersion("341.343","43.13");
+>>>>>>> 6eac22814e9c82c81c7b0221b2c37e987c64a99c
         test.findLadders("hot", "dog", new HashSet<String>(Arrays.asList(new String[]{"hot","dog"})));
         //test.findLadders("hot", "dog", new HashSet<String>(Arrays.asList(new String[]{"hot","cog","dog","tot","hog","hop","pot","dot"})));
         System.out.println(test.fractionToDecimal(-1,-2147483648));
