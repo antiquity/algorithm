@@ -4,63 +4,45 @@ import java.io.*;
 public class Solution {
     PrintStream out=System.out;
     public List<String> wordBreak(String s, Set<String> dict) {
+        List<String> ret = new ArrayList<String>();
+        if(dict.isEmpty()) return  ret;
+        dict = new HashSet(dict);
         int min=Integer.MAX_VALUE,max=0;
         for(String str : dict){
             min=Math.min(min,str.length());
             max=Math.max(max,str.length());
         }
-        boolean valid=false,temp;
-        int maxJ=-1;
-        int[] visited = new int[max-min+1];
+        boolean valid=false;
+        int maxJ=-1,maxW=0,i,j;
 
-        //out.println(min+" "+max+" "+s.length());
-        dict = new HashSet(dict);
-        List<String> ret = new ArrayList<String>();
         Deque<Integer> bup = new ArrayDeque<Integer>();
         bup.push(0);   //out.format("%4d",0);
-        int i,j;
-        boolean forward=true;
-        while(!bup.isEmpty()){
-            if(forward)
-                j=bup.peek()+1;
-            else{
-                j=bup.pop()+1;
-                //out.print("\b\b\b\b"); out.print("    "); out.print("\b\b\b\b");
-            }
-            if(!bup.isEmpty())
-                i=bup.peek();
-            else
-                break;
-            forward=false;
+        bup.push(0);
+        while(bup.size()>1){
+            j=bup.pop()+1;
+            i=bup.peek();
             for(j=Math.max(j,i+min); j<=(i+max) && j<=s.length(); j++)
                 if(dict.contains(s.substring(i,j))){
                     if(j!=s.length()){
                         bup.push(j); //out.format("%4d",j);
-                        forward=true;
+                        bup.push(j);
                     }else{
                         wordBreakSub(ret,bup,s);
-                        forward=false;
                         valid=true;
                     }
-                    if(j>maxJ){ maxJ=j; Arrays.fill(visited,-1); }
+                    if(j>maxJ){ maxJ=j; maxW=bup.size(); }
                     break;
                 }else{
-                    if(j==maxJ+1) visited[j-i-min]=1;
+                    if(!valid && j==maxJ+1 && (maxW-bup.size())*min>max){
+                        bup.clear();
+                        break;
+                    }
                 }
-            //out.format("maxJ=%d, %s\n",maxJ,Arrays.toString(visited));
-            if(!valid){
-                temp=true;
-                for(int tt : visited) if(tt!=1){
-                    temp=false; break;
-                }
-                if(temp) return ret;
-            }
         }
         return ret;
     }
     private void wordBreakSub(List<String> ret, Deque<Integer> bup, String s){
         StringBuilder xx = new StringBuilder();
-        //System.out.println(bup.size() + " "+bup.peek());
         Iterator<Integer> itr=bup.descendingIterator();
         int i=0,j;
         if(itr.hasNext()) i=itr.next();
@@ -70,7 +52,6 @@ public class Solution {
             i=j;
         }
         xx.append(s.substring(i));
-        //out.println(xx);
         ret.add(xx.toString());
     }
     public String shortestPalindrome(String s) {
@@ -140,6 +121,7 @@ outerc:
         char[][] board= new char[str.length][str[0].length()];
         for(int i=0; i<str.length; i++) board[i]=str[i].toCharArray();
         solve(board);
+    }
     public int minDistance(String w1, String w2) {
         int M=w1.length(), N=w2.length();
         int[][] dp = new int[M+1][N+1];
@@ -749,15 +731,12 @@ outer:
     }
     public static void main(String[] args){
         Solution test = new Solution();
-<<<<<<< HEAD
-        System.out.println(test.wordBreak("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab", new HashSet<String>(Arrays.asList(new String[]{"a","aa","aaa","aaaa","aaaaa","aaaaaa","aaaaaaa","aaaaaaaa","aaaaaaaaa","aaaaaaaaaa"}))));
+        System.out.println(test.wordBreak("a", new HashSet<String>(Arrays.asList(new String[]{}))));
         System.out.println(test.shortestPalindrome("abcd"));
         test.solve(new String[]{"OOOOXX","OOOOOO","OXOXOO","OXOOXO","OXOXOO","OXOOOO"});
-=======
         System.out.println("minDistance"+test.minDistance("dini","ainia"));
         System.out.println("minDistance"+test.minDistance("dinitrophenylhydrazine","acetylphenylhydrazine"));
         test.compareVersion("341.343","43.13");
->>>>>>> 6eac22814e9c82c81c7b0221b2c37e987c64a99c
         test.findLadders("hot", "dog", new HashSet<String>(Arrays.asList(new String[]{"hot","dog"})));
         //test.findLadders("hot", "dog", new HashSet<String>(Arrays.asList(new String[]{"hot","cog","dog","tot","hog","hop","pot","dot"})));
         System.out.println(test.fractionToDecimal(-1,-2147483648));
