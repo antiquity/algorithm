@@ -3,6 +3,27 @@ import java.io.*;
 
 public class Solution {
     PrintStream out=System.out;
+    public int findKthLargest(int[] nums, int k) {
+        return findKthLargestSub(nums, k, new Random(), 0, nums.length);
+    }
+    private int findKthLargestSub(int[] nums, int k, Random rand, int l, int r){
+        int s = nums[rand.nextInt(r-l)+l];
+        int i=l,kk=l,j=r,temp;
+        while(kk<j){
+            if(nums[kk]<s){
+                j--; temp=nums[kk]; nums[kk]=nums[j]; nums[j]=temp;
+            }else if(nums[kk]>s){
+                if(i==kk){ i++; kk++;}
+                else{
+                    temp=nums[kk]; nums[kk]=nums[i]; nums[i]=temp; i++;
+                }
+            }else kk++;
+        }
+        System.out.format("%5d: %s\n",s,Arrays.toString(Arrays.copyOfRange(nums,l,r)));
+        if(i>=k) return findKthLargestSub(nums,k,rand,l,i);
+        else if(j<k) return findKthLargestSub(nums,k,rand,j,r);
+        else return s;
+    }
     public List<String> wordBreak(String s, Set<String> dict) {
         List<String> ret = new ArrayList<String>();
         if(dict.isEmpty()) return  ret;
@@ -731,6 +752,7 @@ outer:
     }
     public static void main(String[] args){
         Solution test = new Solution();
+        System.out.println(test.findKthLargest(new int[]{1,3,5,3,2,1,5,6,7,8,98,9,4,54,323,542,452,4,54,265,7,68,3456,345,6,53,456,452,345,2,346,7,53,56,3456},12));
         System.out.println(test.wordBreak("a", new HashSet<String>(Arrays.asList(new String[]{}))));
         System.out.println(test.shortestPalindrome("abcd"));
         test.solve(new String[]{"OOOOXX","OOOOOO","OXOXOO","OXOOXO","OXOXOO","OXOOOO"});
