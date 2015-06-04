@@ -3,6 +3,9 @@ import java.io.*;
 
 public class Solution {
     PrintStream out=System.out;
+    public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
+
+    }
     public int findKthLargest(int[] nums, int k) {
         return findKthLargestSub(nums, k, new Random(), 0, nums.length);
     }
