@@ -3,8 +3,76 @@ import java.io.*;
 
 public class Solution {
     PrintStream out=System.out;
-    public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
+    public int divide(long dividend, long divisor){
+        if(divisor==0) return Integer.MAX_VALUE;
+        boolean neg = (dividend>0) ^ (divisor>0);
+        dividend = (dividend>=0 ? dividend : -dividend);
+        divisor = (divisor>=0 ? divisor : -divisor);
+        long a = divisor, ret=0;
+        while((a<<1)<=dividend) a=a<<1;
+        while(a>=divisor){
+            ret = (ret<<1);
+            if(dividend>=a){
+                ret++;
+                dividend-=a;
+            }
+            a=a>>1;
+        }
+        ret = neg? -ret: ret;
+        if(ret>Integer.MAX_VALUE) return Integer.MAX_VALUE;
+        if(ret<Integer.MIN_VALUE) return Integer.MIN_VALUE;
+        return (int)ret;
+    }
+    public boolean isMatch(String s, String p) {
+        int i=0, j=0, ii,jj;
+        List<String> sp = new ArrayList<String>();
+        int idx,temp;
 
+        while(i<p.length() && p.charAt(i)=='*') i++;
+        while(i<p.length()){
+            j=i;
+            while(j<p.length() && p.charAt(j)!='*') j++;
+            sp.add(p.substring(i,j));
+            i=j;
+            while(i<p.length() && p.charAt(i)=='*') i++;
+        }
+        System.out.println(s);
+        System.out.println(p);
+        System.out.println(sp);
+
+        int[] st = new int[sp.size()+1];
+        st[0]=-1; temp=0;
+        while(temp>=0){
+            System.out.println(Arrays.toString(st)+": "+temp);
+            ii = st[temp]+1;
+            if(temp==sp.size())
+                if((p.length()>0 && p.charAt(p.length()-1)=='*') || ii==s.length())
+                    return true;
+                else{
+                    temp--;
+                    continue;
+                }
+
+            idx = indexOfString(s,sp.get(temp),ii);
+            if(temp==0 && p.charAt(0)!='*' && idx!=0) return false;
+            if(idx!=-1){
+                st[temp]=idx;
+                st[temp+1]=idx+sp.get(temp).length()-1;
+                temp++;
+            }else return false;
+        }
+        return false;
+    }
+    private int indexOfString(String a, String b, int startFrom){
+        int i=startFrom;
+indexOfStringOuter:
+        for(; i<=a.length()-b.length(); i++){
+            for(int j=0; j<b.length(); j++)
+                if(b.charAt(j)!='?' && a.charAt(i+j)!=b.charAt(j))
+                    continue indexOfStringOuter;
+            return i;
+        }
+        return -1;
     }
     public int findKthLargest(int[] nums, int k) {
         return findKthLargestSub(nums, k, new Random(), 0, nums.length);
@@ -162,9 +230,6 @@ outerc:
             }
         }
         return dp[M][N];
-    }
-    public boolean isMatch(String s, String p) {
-        return true;
     }
     public int compareVersion(String v1, String v2) {
         String[] a1=v1.trim().split("\\.");
@@ -755,6 +820,10 @@ outer:
     }
     public static void main(String[] args){
         Solution test = new Solution();
+        System.out.println(test.isMatch("asdfkjkdfrenliang gu","*fk?*enli?ng *"));
+        System.out.println(test.isMatch("b","?*?"));
+        System.out.println(test.isMatch("bbbbbbbabbaabbabbbbaaabbabbabaaabbababbbabbbabaaabaab", "b*b*ab**ba*b**b***bba"));
+        System.out.println(test.isMatch("abccdec","ab*c"));
         System.out.println(test.findKthLargest(new int[]{1,3,5,3,2,1,5,6,7,8,98,9,4,54,323,542,452,4,54,265,7,68,3456,345,6,53,456,452,345,2,346,7,53,56,3456},12));
         System.out.println(test.wordBreak("a", new HashSet<String>(Arrays.asList(new String[]{}))));
         System.out.println(test.shortestPalindrome("abcd"));
@@ -785,5 +854,7 @@ outer:
         System.out.println(test.rotateRight(test.new ListNode(1),0));
         System.out.println(test.generateParenthesis(4));
         System.out.println(test.isPalindrome("aA"));
+        System.out.println(test.divide(-1024,11) +" vs "+ -1024/11);
+        System.out.println(test.divide(5,2) +" vs "+ 5/(2));
     }
 }
