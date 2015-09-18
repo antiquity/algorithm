@@ -3,6 +3,104 @@ import java.io.*;
 
 public class Solution {
     PrintStream out=System.out;
+    public int[] findOrderBFS(int n, int[][] prerequisites) {
+        List<Integer>[] G = new List[n];
+        int[] cnt = new int[n];
+        boolean[] visited = new boolean[n];
+        for(int i=0; i<n; i++) G[i]=new ArrayList<Integer>();
+        for(int[] i : prerequisites){
+            G[i[1]].add(i[0]);
+            cnt[i[0]]++;
+        }
+        int[] ret = new int[n];
+        int k=0;
+        boolean test;
+        while(true){
+            test =false;
+            for(int i=0; i<n; i++) if(!visited[i]){
+                if(cnt[i]==0){
+                    test=true;
+                    ret[k++]=i;
+                    visited[i]=true;
+                    for(int j:G[i]) cnt[j]--;
+                }
+            }
+            if(!test) break;
+        }
+        return k==n ? ret : new int[0];
+    }
+    public int[] findOrderDFS(int n, int[][] prerequisites) {
+        List<Integer>[] graph = new List[n];
+        for(int i=0; i<n; i++) graph[i]=new ArrayList<Integer>();
+        for(int[] i : prerequisites)
+            graph[i[0]].add(i[1]);
+        boolean[] visited = new boolean[n];
+        boolean[] record = new boolean[n];
+        Deque<int[]> stack = new ArrayDeque<int[]>();
+        int c,d;
+        int[] temp;
+        int[] ret =new int[n];
+        int cnt=0;
+        for(int i=0; i<n; i++) if(!visited[i]){
+            visited[i]=true;
+            record[i]=true;
+            stack.push(new int[]{i,-1});
+canFinishOuter:
+            while(!stack.isEmpty()){
+                temp=stack.pop();
+                c = temp[0];
+                for(int k=temp[1]+1; k<graph[c].size(); k++){
+                    d=graph[c].get(k);
+                    if(!visited[d]){
+                        record[d]=true;
+                        visited[d]=true;
+                        stack.push(new int[]{c,k});
+                        stack.push(new int[]{d,-1});
+                        continue canFinishOuter;
+                    }else if(record[d])
+                        return new int[0];
+                }
+                record[c]=false;
+                ret[cnt++]=c;
+            }
+        }
+        return ret;
+
+    }
+    public boolean canFinish(int n, int[][] prerequisites) {
+        List<Integer>[] graph = new List[n];
+        for(int i=0; i<n; i++) graph[i]=new ArrayList<Integer>();
+        for(int[] i : prerequisites)
+            graph[i[0]].add(i[1]);
+        boolean[] visited = new boolean[n];
+        boolean[] record = new boolean[n];
+        Deque<int[]> stack = new ArrayDeque<int[]>();
+        int c,d;
+        int[] temp;
+        for(int i=0; i<n; i++) if(!visited[i]){
+            visited[i]=true;
+            record[i]=true;
+            stack.push(new int[]{i,-1});
+canFinishOuter:
+            while(!stack.isEmpty()){
+                temp=stack.pop();
+                c = temp[0];
+                for(int k=temp[1]+1; k<graph[c].size(); k++){
+                    d=graph[c].get(k);
+                    if(!visited[d]){
+                        record[d]=true;
+                        visited[d]=true;
+                        stack.push(new int[]{c,k});
+                        stack.push(new int[]{d,-1});
+                        continue canFinishOuter;
+                    }else if(record[d])
+                        return false;
+                }
+                record[c]=false;
+            }
+        }
+        return true;
+    }
     public int divide(long dividend, long divisor){
         if(divisor==0) return Integer.MAX_VALUE;
         boolean neg = (dividend>0) ^ (divisor>0);
@@ -856,5 +954,6 @@ outer:
         System.out.println(test.isPalindrome("aA"));
         System.out.println(test.divide(-1024,11) +" vs "+ -1024/11);
         System.out.println(test.divide(5,2) +" vs "+ 5/(2));
+        System.out.println(test.canFinish(2, new int[][]{{0,1},{1,0}}));
     }
 }
