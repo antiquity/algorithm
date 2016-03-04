@@ -3,6 +3,8 @@ import java.io.*;
 
 public class Solution {
     PrintStream out=System.out;
+    public int lengthOfLIS(int[] nums) {
+    }
     public int[] findOrderBFS(int n, int[][] prerequisites) {
         List<Integer>[] G = new List[n];
         int[] cnt = new int[n];

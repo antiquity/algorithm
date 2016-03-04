@@ -134,5 +134,15 @@ public class B{
                 bin[j]=bin[j]+bin[j-1];
         return bin[k];
     }
+    int binomial(int n, int k) { 
+        if(k>n/2) k=n-k;
+        int m=n-k;
+        int[] dp=new int[k+1];
+        Arrays.fill(dp,1);
+        for(int i=1; i<=m; i++)
+            for(int j=1;j<=k; j++)
+                dp[j]=dp[j]+dp[j-1];
+        return dp[k];
+    }
 }
 
