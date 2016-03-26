@@ -1,0 +1,75 @@
+PROBLEM STATEMENT
+Elly has a graph with N+1 vertices, conveniently numbered from 0 to N.
+The graph is actually a rooted tree, with the root being the vertex with number zero.
+
+
+Elly can move between the vertices of her tree by jumping from one vertex to another.
+Not all jumps are allowed.
+Elly may jump from vertex A to vertex B if and only if one of A and B is a (direct or indirect) descendant of the other.
+
+
+Elly is currently standing in the root of the tree: vertex 0.
+She would like to make a sequence of N jumps that visits each of the other N vertices exactly once.
+
+Note that Elly is allowed to jump over previously visited vertices.
+For example, if A is an ancestor of B and B is an ancestor of C, Elly can jump from A to C or from C to A even if B has been already visited.
+
+
+You are given the description of the tree: a int[] parent with N elements.
+For each i between 0 and N-1, inclusive, the vertex parent[i] is the parent of the vertex (i+1).
+
+If it is possible for Elly to visit each of the vertices 1 through N exactly once, return a int[] with N elements: the numbers of the vertices in the order in which she should visit them.
+If there is more than one possible answer, return the lexicographically smallest one.
+If there is no way to achieve her goal, return an empty int[] instead.
+
+DEFINITION
+Class:EllysTree
+Method:getMoves
+Parameters:int[]
+Returns:int[]
+Method signature:int[] getMoves(int[] parent)
+
+
+NOTES
+-A tree is a connected graph with N+1 vertices and N edges. A rooted tree is a tree in which one vertex is labeled as the root.
+-In a rooted tree, the parent of vertex X is the first vertex on the path from X to the root. The root has no parent.
+-In a rooted tree, vertex X is a descendant of vertex Y if Y lies on the path from X to the root.
+-Given two equally long but different sequences of integers A and B, A is said to be lexicographically smaller than B if A contains a smaller number on the first position where they differ.
+
+
+CONSTRAINTS
+-parent will contain between 1 and 100 elements, inclusive.
+-Each element of parent will be between 0 and |parent|, inclusive, where "|parent|" denotes the number of elements in parent (i.e. N).
+-It is guaranteed, that the given graph will be a valid rooted tree.
+
+
+EXAMPLES
+
+0)
+{9, 13, 7, 9, 8, 14, 14, 0, 6, 9, 2, 2, 5, 5, 7}
+
+Returns: {1, 5, 2, 11, 13, 12, 8, 3, 7, 15, 14, 4, 6, 9, 10 }
+
+The nodes Elly can jump to from node 6 are: {0, 8, 5, 14, 9, 10, 1, 4}.
+
+
+1)
+{3, 4, 5, 0, 2}
+
+Returns: {1, 2, 3, 4, 5 }
+
+There are no branches in this tree, thus Elly can traverse it in any order.
+
+2)
+{0, 0}
+
+Returns: { }
+
+The root has two children. No matter which of them Elly chooses first, she will not be able to get to the other, since the girl has to go back to the root, which is already visited.
+
+3)
+{0, 6, 6, 2, 6, 1, 3, 5}
+
+Returns: {2, 4, 1, 3, 7, 6, 5, 8 }
+
+

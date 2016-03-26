@@ -1,0 +1,91 @@
+PROBLEM STATEMENT
+Fox Ciel has an airline company: Fox Airline.
+There are n airports in the region serviced by Fox Airline.
+The airports are numbered 0 through n-1.
+You are given the int n.
+
+The company currently offers several bidirectional flights.
+You are given the information about these flights in the int[]s a and b:
+for each valid i there is a bidirectional flight that connects the airports a[i] and b[i].
+Note that some pairs of airports may be connected by multiple direct flights.
+
+Fox Airline is too big, so Ciel has to split it into two new companies.
+After the split, each of the current flights will belong to one of the two new companies.
+
+We say that a company services the entire region if it is possible to travel between all cities in the region by just using flights of that company.
+Fox Ciel wants to know whether it is possible to split her company in such a way that each of the two new companies will service the entire region (i.e., all n cities).
+Return "Possible" if it can be done, and "Impossible" otherwise.  
+
+DEFINITION
+Class:FoxAirline2
+Method:isPossible
+Parameters:int, int[], int[]
+Returns:String
+Method signature:String isPossible(int n, int[] a, int[] b)
+
+
+CONSTRAINTS
+-n will be between 2 and 10, inclusive.
+-a will contain between 1 and 50 elements, inclusive.
+-a and b will contain the same number of elements.
+-Each element in a will be between 0 and n-1, inclusive.
+-Each element in b will be between 0 and n-1, inclusive.
+-For each i, a[i] != b[i].
+
+
+EXAMPLES
+
+0)
+4
+{0,0,0,1,1,2}
+{1,2,3,2,3,3}
+
+Returns: "Possible"
+
+One possible solution is to assign the flights {(0,1), (0,2), (2,3)} to one company and the flights {(0,3), (1,2), (1,3)} to the other company.
+
+1)
+6
+{0,0,0,0,1,1,1,2,2,3,0}
+{1,2,3,4,2,3,4,3,4,4,5}
+
+Returns: "Impossible"
+
+Note that Ciel's current company has only one flight that visits airport 5.
+Regardless of how we divide the flights between the two new companies, one of those companies won't have any flights that visit airport 5.
+
+2)
+5
+{0,0,0,1,1,2,2,3}
+{1,2,4,2,4,3,4,4}
+
+Returns: "Possible"
+
+
+
+3)
+2
+{0,1,1}
+{1,0,0}
+
+Returns: "Possible"
+
+Note that there may be multiple flights between some pairs of airports.
+
+4)
+10
+{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 7, 7, 8}
+{1, 2, 3, 4, 5, 6, 7, 8, 9, 2, 3, 4, 5, 6, 7, 8, 9, 3, 4, 5, 6, 7, 8, 9, 4, 5, 6, 7, 8, 9, 5, 6, 7, 8, 9, 6, 7, 8, 9, 7, 8, 9, 8, 9, 9}
+
+Returns: "Possible"
+
+
+
+5)
+2
+{0}
+{1}
+
+Returns: "Impossible"
+
+
