@@ -8,8 +8,8 @@ public class B{
         while(in.hasNextInt()){
             int n = in.nextInt(), b=in.nextInt();
             Deque<int[]> q = new ArrayDeque<int[]>();
-            int[] ret = new int[n];
-            int t=0;
+            long[] ret = new long[n];
+            long t=0;
             for(int i=0; i<n; i++){
                 int ti=in.nextInt(), di=in.nextInt();
                 while(t<=ti && !q.isEmpty()){
@@ -33,7 +33,7 @@ public class B{
                     t+=qx[1];
                 ret[qx[2]]=t;
             }
-            for(int y : ret)
+            for(long y : ret)
                 System.out.print(y+" ");
             System.out.println();
         }

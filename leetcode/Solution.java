@@ -3,7 +3,66 @@ import java.io.*;
 
 public class Solution {
     PrintStream out=System.out;
+    private void maxNumber_doit(int[] n1, int k, int[][] f){
+        for(int kk=0; kk<=k; kk++){
+            if(kk==0){
+                for(int ii=n1.length-1; ii>=0; ii--) f[ii][kk]=-1;
+            }else{
+                if(kk>n1.length){
+                    for(int ii=n1.length-1; ii>=0; ii--) f[ii][kk]=-1;
+                }else{
+                    for(int ii=n1.length-1; ii>n1.length-kk; ii--) f[ii][kk]=-1;
+                    f[n1.length-kk][kk]=n1.length-kk;
+                    for(int ii=n1.length-kk-1; ii>=0; ii--){
+                        f[ii][kk]=ii;
+                        if(n1[ii]<n1[f[ii+1][kk]]) f[ii][kk]=f[ii+1][kk];
+                    }
+                }
+            }
+        }
+    }
+    public int[] maxNumber(int[] n1, int[] n2, int k) {
+        int[][] f = new int[n1.length][k+1], g = new int[n2.length][k+1];
+        maxNumber_doit(n1, k, f); 
+        maxNumber_doit(n2, k, g); 
+
+        int[] ret = new int[k];
+        List<Integer> q = new ArrayList<Integer>(),p;
+        q.add(0); q.add(0);
+        for(int kk=k-1; kk>=0; kk--){
+            int maximum=Integer.MIN_VALUE;
+            int idx=0;
+            while(idx<q.size()){
+                int i=q.get(idx), j=q.get(idx+1), u, v;
+                for(int s=0; s<=kk; s++) if((u=f[i][s])>=0 && (v=g[j][kk-s])>=0){
+                    maximum = Math.max(maximum,Math.max(n1[u],n2[v]));
+                }
+                idx+=2;
+            }
+            idx=0;
+            p = new ArrayList<Integer>();
+            while(idx<q.size()){
+                int i=q.get(idx), j=q.get(idx+1), u, v;
+                for(int s=1; s<kk; s++) if((u=f[i][s])>=0 && (v=g[j][kk-s])>=0){
+                    if(n1[u]==maximum){
+                        p.add(u+1);
+                        p.add(j);
+                    }
+                    if(n2[v]==maximum){
+                        p.add(i);
+                        p.add(v+1);
+                    }
+                }
+                idx+=2;
+            }
+            ret[kk]=maximum;
+            q=p;
+        }
+        return ret;
+    }
+
     public int lengthOfLIS(int[] nums) {
+        return 0;
     }
     public int[] findOrderBFS(int n, int[][] prerequisites) {
         List<Integer>[] G = new List[n];
