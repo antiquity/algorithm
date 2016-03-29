@@ -1,46 +1,50 @@
 import java.io.*;
 import java.util.*;
 
-
 public class D{
     long solver(int[] a, int n, int k){
-        int l=30;
-        //while((1<<l)<=k) l++; l--;
-        List<Integer> ret = new ArrayList<>();
-        for(int i=0; i<=n; i++){
-            int sum=0;
-            int sum2=0;
-            for(int j=Math.max(0,i-l); j<i; j++){
-                if(a[j]>=0){
-                    sum+=((a[j])>>(i-j));
-                    sum2+=((a[j]&((1<<(i-j))-1))<<(l-(i-j)));
-                }else{
-                    sum-=((-a[j])>>(i-j));
-                    sum2-=(((-a[j])&((1<<(i-j))-1))<<(l-(i-j)));
-                }
-            }
-            for(int j=i+1; j<=Math.min(i+l,n); j++)
-                if(a[j]>=0)
-                    sum+=((a[j]&((1<<(l+1-(j-i)))-1))<<(j-i));
+        Deque<Integer> error = new ArrayDeque<>();
+        long sum=0;
+        for(int i=0; i<=n || sum!=0; i++){
+            if(sum>=0)
+                sum>>=1;
+            else
+                sum=-((-sum)>>1);
+            if(i<=n) sum+=a[i];
+            if(sum%2!=0)
+                if(sum>0)
+                    error.offerFirst(-(i+1));
                 else
-                    sum-=(((-a[j])&((1<<(l+1-(j-i)))-1))<<(j-i));
-
-            System.out.println(i+": "+ret+": "+sum+": "+sum2);
-            if(sum+a[i]==0) continue;
-            else{
-                if(sum2!=0){
-                   if(ret.size()==0) return 0;
-                }else{
-                    if(Math.abs(sum)<=k && (i!=n || sum!=0)){
-                        for(int x : ret)
-                            if(x+l<i)
-                                return 0;
-                        ret.add(i);
-                    }
+                    error.offerFirst((i+1));
+            //System.out.println(i+": "+sum);
+        }
+        int base=Math.abs(error.peekLast())-1;
+        //System.out.println(error);
+        long cor=0;
+        int x=Math.abs(error.peekFirst())-1;
+        while(!error.isEmpty()){
+            cor<<=1;
+            if(x==Math.abs(error.peekFirst())-1)
+                cor+=Integer.signum(error.pollFirst());
+            x--;
+            if(Math.abs(cor)>2*k)
+                return 0;
+        }
+        //System.out.println(cor);
+        int ret=0;
+        while(base>=0){
+            if(base<=n){
+                if(Math.abs(cor+a[base])<=k){
+                    if(base!=n || cor+a[base]!=0)
+                        ret++;
                 }
             }
+            base--;
+            cor<<=1;
+            if(Math.abs(cor)>2*k)
+                break;
         }
-        return ret.size();
+        return ret;
     }
     public static void main(String[] argin) {
         D inst = new D();
