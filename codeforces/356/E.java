@@ -42,107 +42,101 @@ public class E{
         }
     }
     static java.io.PrintStream out=System.out;
-    void inc(Map<Integer,Integer> map, int p){
-        Integer c=map.get(p);
+    void inc(int p){
+        Integer c=count.get(p);
         if(c==null){
-            map.put(p,1);
+            count.put(p,1);
             sum+=uf.size[p];
-        }else map.put(p,c+1);
+        }else count.put(p,c+1);
     }
-    void dec(Map<Integer,Integer> map, int p){
-        Integer c=map.get(p);
-        if(c==null) return;
-        if(c>1) map.put(p,c-1);
+    void dec(int p){
+        Integer c=count.get(p);
+        if(c>1) count.put(p,c-1);
         else{
-            map.remove(p);
+            count.remove(p);
             sum-=uf.size[p];
         }
     }
+    int n, k;
+    char[][] map;
     int sum;
     UnionFind uf;
-    int solve(int n, int k, char[][] map){
+    Map<Integer,Integer> count;
+    int[][] p;
+    int solve(){
         uf=new UnionFind(n*n);
-        for(int i=0; i<n; i++){
-            for(int j=0; j<n; j++){
-                if(i>0 && map[i][j]=='.' && map[i-1][j]=='.')
-                    uf.union(i*n+j,(i-1)*n+j);
-                if(j>0 && map[i][j]=='.' && map[i][j-1]=='.')
-                    uf.union(i*n+j,i*n+j-1);
+        for(int i=0; i<n; i++)
+            for(int j=0; j<n; j++) if(map[i][j]=='.'){
+                int idx=i*n+j;
+                if(i>0 && map[i-1][j]=='.')
+                    uf.union(idx,idx-n);
+                if(j>0 && map[i][j-1]=='.')
+                    uf.union(idx,idx-1);
             }
-        }
-        int[][] p=new int[n][n];
+
+        p=new int[n][n];
         for(int i=0; i<n; i++)
             for(int j=0; j<n; j++)
                 p[i][j]=uf.find(i*n+j);
 
-        Map<Integer,Integer> count=new HashMap<>();
+        count=new HashMap<>();
         sum=0;
-        for(int i=0; i<=k; i++)
-            for(int j=0; j<=k; j++)
-                inc(count,p[i][j]);
-        dec(count,p[k][k]);
-        int max=sum;
-        out.print(max);
+        for(int i=0; i<k; i++)
+            for(int j=0; j<k; j++)
+                inc(p[i][j]);
+        int max=getSum(0,0);
 
-        for(int i=0; i<=n-k;){
-            int j=1;
-            for(j=1; j<=n-k; j++){
-                if(i>0){
-                    inc(count,p[i-1][j+k-1]);
-                    dec(count,p[i-1][j-1]);
+        for(int i=0; i<=n-k;i++){
+            for(int j=i%2==1?(n-k-1):1, jj=0;
+                    jj<n-k; j+=(i%2==1?-1:1), jj++){
+                for(int l=i; l<i+k; l++){
+                    if(i%2==0){
+                        inc(p[l][j+k-1]);
+                        dec(p[l][j-1]);
+                    }else{
+                        inc(p[l][j]);
+                        dec(p[l][j+k]);
+                    }
                 }
-                if(i+k<n){
-                    inc(count,p[i+k][j+k-1]);
-                    dec(count,p[i+k][j-1]);
-                }
-                if(j<n-k) for(int l=i; l<i+k; l++)
-                    inc(count,p[l][j+k]);
-                if(j-2>=0) for(int l=i; l<i+k; l++)
-                    dec(count,p[l][j-2]);
-
-                max=Math.max(max,sum);
-                out.print(max);
+                max=Math.max(max,getSum(i,j));
             }
-            out.println();
-            i++; j--;
-            if(i>n-k) break;
+            if(i>=n-k) break;
 
-            inc(count,p[i+k-1][j-1]);
-            dec(count,p[i-1][j-1]);
-            if(i+k<n) for(int l=j; l<j+k; l++) inc(count,p[i+k][l]);
-            if(i-2>=0) for(int l=j; l<j+k; l++) dec(count,p[i-2][l]);
-            max=Math.max(max,sum);
-                out.print(max);
-
-            for(j=n-k-1; j>=0; j--){
-                if(i>0){
-                    inc(count,p[i-1][j]);
-                    dec(count,p[i-1][j+k]);
-                }
-                if(i+k<n){
-                    inc(count,p[i+k][j]);
-                    dec(count,p[i+k][j+k]);
-                }
-                if(j-1>=0) for(int l=i; l<i+k; l++)
-                    inc(count,p[l][j-1]);
-                if(j<n-k-1) for(int l=i; l<i+k; l++)
-                    dec(count,p[l][j+k+1]);
-
-                max=Math.max(max,sum);
-                out.print(max);
+            int j=i%2==0?n-k:0;
+            for(int l=j; l<j+k; l++){
+                inc(p[i+k][l]);
+                dec(p[i][l]);
             }
-            i++; j++;
-            out.println();
-
-            if(i>n-k) break;
-            inc(count,p[i+k-1][j+k]);
-            dec(count,p[i-1][j+k]);
-            if(i+k<n) for(int l=j; l<j+k; l++) inc(count,p[i+k][l]);
-            for(int l=j; l<j+k; l++) dec(count,p[i-2][l]);
-            max=Math.max(max,sum);
-            out.print(max);
+            max=Math.max(max,getSum(i,j));
         }
         return max;
+    }
+    private int getSum(int i, int j){
+        int s=sum, pp=0;
+        Set<Integer> set=new HashSet<>();
+        if(i>0) for(int l=j; l<j+k; l++)
+            if(map[i-1][l]=='.' && !count.containsKey((pp=p[i-1][l])) && !set.contains(pp)){
+                //out.println(pp+" "+uf.size[pp]);
+                s+=uf.size[pp];
+                set.add(pp);
+            }
+        if(i+k<n) for(int l=j; l<j+k; l++)
+            if(map[i+k][l]=='.' && !count.containsKey((pp=p[i+k][l])) && !set.contains(pp)){
+                s+=uf.size[pp];
+                set.add(pp);
+            }
+        if(j>0) for(int l=i; l<i+k; l++)
+            if(map[l][j-1]=='.' && !count.containsKey((pp=p[l][j-1])) && !set.contains(pp)){
+                s+=uf.size[pp];
+                set.add(pp);
+            }
+        if(j+k<n) for(int l=i; l<i+k; l++)
+            if(map[l][j+k]=='.' && !count.containsKey((pp=p[l][j+k])) && !set.contains(pp)){
+                s+=uf.size[pp];
+                set.add(pp);
+            }
+        //out.format("i=%d, j=%d, sum=%d, s=%d\n", i,j,sum,s);
+        return s;
     }
     public static void main(String[] argin) {
         E inst = new E();
@@ -152,7 +146,10 @@ public class E{
             char[][] map = new char[n][];
             for(int i=0; i<n; i++)
                 map[i]=in.next().toCharArray();
-            out.println(inst.solve(n,k,map));
+            inst.map=map;
+            inst.n=n;
+            inst.k=k;
+            out.println(inst.solve());
         }
     }
 }
