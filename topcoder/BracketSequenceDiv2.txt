@@ -1,0 +1,73 @@
+PROBLEM STATEMENT
+
+Correct bracket sequences can be defined recursively as follows:
+
+The empty string "" is a correct sequence.
+If "X" and "Y" are correct sequences, then "XY" (the concatenation of X and Y) is a correct sequence.
+If "X" is a correct sequence, then "(X)" is a correct sequence.
+Each correct bracket sequence can be derived using the above rules.
+
+
+
+Examples of correct bracket sequences include "", "()", "()()()", "(()())", and "(((())))".
+
+
+A string T is called a subsequence of a string S if we can erase some (possibly none or all) characters of S to obtain T. For example, "bdf" is a subsequence of "abcdefg".
+
+
+You are given a String s that consists of the characters '(' and ')' only.
+Let X be the number of different non-empty subsequences of s that are correct bracket sequences.
+Note that each distinct subsequence should only be counted once, even if it can be obtained from s in multiple ways.
+(See the examples for clarification.)
+Compute and return the value (X modulo 1,000,000,007).
+
+
+DEFINITION
+Class:BracketSequenceDiv2
+Method:count
+Parameters:String
+Returns:int
+Method signature:int count(String s)
+
+
+CONSTRAINTS
+-s will contain between 1 and 100 characters, inclusive.
+-Each character in s will be '(' or ')'.
+
+
+EXAMPLES
+
+0)
+"(())("
+
+Returns: 2
+
+Correct non-empty bracket subsequences are "()" and "(())".
+
+1)
+"())"
+
+Returns: 1
+
+Only "()" is suitable.
+
+2)
+")((("
+
+Returns: 0
+
+There are no non-empty correct bracket subsequences.
+
+3)
+"()()()()()()()()(())))(()()()()))())"
+
+Returns: 364675
+
+
+
+4)
+"()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()"
+
+Returns: 122826009
+
+Do not forget to take answer modulo 1,000,000,007.

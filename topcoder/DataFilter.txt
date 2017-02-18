@@ -1,0 +1,90 @@
+PROBLEM STATEMENT
+Name, age, and id. That is the information that we are supposed to have for 
+all our workers, but what we have is a mess. Our data is a collection of records,
+but some workers have multiple records, and some of the records are missing
+some of the information.  We would like to untangle the mess. At least, we 
+would like to figure out how many different workers we have!
+
+Each worker has his own unique id that is a string of digits, the first of
+which is always zero ('0'). Each worker has a name consisting of uppercase
+letters 'A'-'Z', and has an age that is an integer with no leading zeros. Neither
+name nor age can be relied upon to be unique. Each data
+record contains information for a single worker, and is formatted to contain 
+no leading or trailing spaces. It may contain 1, 2, or all 3 of the 
+fields (name, age, id) in any order. The fields within a record will be 
+separated by one or more spaces.
+
+Create a class DataFilter that contains a method untangle that is 
+given a String[] data that contains  the
+records and returns the number of different workers we have. 
+
+Each element of
+data consists of one or more records, separated from each other by a single semicolon (';'). If there is more 
+than one way to untangle the data, return the smallest possible
+number of workers. If there is no consistent interpretation of the data, 
+return -1.
+
+
+
+DEFINITION
+Class:DataFilter
+Method:untangle
+Parameters:String[]
+Returns:int
+Method signature:int untangle(String[] data)
+
+
+NOTES
+-Ids should be treated as strings, not numbers.
+
+
+CONSTRAINTS
+-data will contain between 1 and 50 elements inclusive.
+-Each element of data will contain between 1 and 50 characters inclusive.
+-Each element of data will consist of 1 or more records, separated from each other by a single ';'
+-Each record in each element of data will contain no leading or trailing spaces.
+-Each record will contain exactly 1, 2, or 3 fields separated by (possibly multiple) spaces. 
+-No record will contain more than one age, name, or id.
+-Each age will be between 1 and 150 inclusive, and will not have a leading '0'
+-Each id will contain between 1 and 10 characters inclusive, all digits and having a leading '0'
+-Each name will contain between 1 and 10 characters inclusive, all uppercase letters 'A'-'Z'
+
+
+EXAMPLES
+
+0)
+{"BOB      22 013","17 BOB;22","0234","16"} 
+
+Returns: 3
+
+
+data consists of 5 records (one of the elements of data contains 2 records, separated by a ';'). One of the records has all 3 fields, one of the records has 2 fields, and the other records each have just a single field.
+
+   There are at least 3 different workers since there are 3 different ages.
+   [BOB 22 013],[BOB 17 0234],[TOM 16 099] is one possibility that is consistent with these 5 data records.
+
+1)
+{"2 01;02 B;B;B 02;2 02;C   02"}
+
+Returns: -1
+
+One record has the employee with id 02 being named B, while another record claims that 02 is named C. So these records are inconsistent.
+
+2)
+{"A 21","B 21","B 23","A 23","01 A","02 21","B 03","04 B"}
+
+Returns: 4
+
+One way to untangle these 8 records into just 4 employees is [A 23 01], [B 21 03], [B 23 04], [A 21 02].
+
+3)
+{"96;DJG 00 88;EFD 88"}
+
+Returns: 3
+
+4)
+{"00 BOB 22","0 BOB 22"}
+
+Returns: 2
+
+Id's 0 and 00 are different, so these two cannot be combined.
